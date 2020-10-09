@@ -1,4 +1,7 @@
+@import '~antd/dist/antd.css';
+
 @import "./Main.css";
+@import "./Register.css";
 @import "./TopBar.css";
 
 .App {
