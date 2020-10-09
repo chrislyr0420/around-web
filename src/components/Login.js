@@ -1,5 +1,8 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, message } from 'antd';
+import { Link } from 'react-router-dom';
+
+import { API_ROOT } from '../constants';
 
 class NormalLoginForm extends React.Component {
 
@@ -32,17 +35,40 @@ class NormalLoginForm extends React.Component {
           <Button type="primary" htmlType="submit" className="login-form-button">
             Log in
           </Button>
-          Or <a href="">register now!</a>
+          Or <Link to="/register">register now!</Link>
         </Form.Item>
       </Form>
     );
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        fetch(`${API_ROOT}/login`, {
+          method: 'POST',
+          body: JSON.stringify({
+            username: values.username,
+            password: values.password
+          })
+        })
+        .then((response) => {
+          if (response.ok) {
+            return response.text();
+          }
+          throw new Error(response.statusText);
+        })
+        .then((token) => {
+          console.log(token);
+          this.props.handleLoginSucceed(token);
+          console.log('Login Success!');
+        })
+        .catch((error) => {
+          console.error(err);
+          message.error('Login failed.');
+
+        })
       }
     });
   };

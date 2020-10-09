@@ -18,6 +18,13 @@
     background-color: #282c34;
 }
 
+.logout {
+    float: right;
+    padding-top: 13px;
+    padding-right: 13px;
+}
+
+
 @media (prefers-reduced-motion: no-preference) {
     .App-logo {
         animation: App-logo-spin infinite 20s linear alternate-reverse;
